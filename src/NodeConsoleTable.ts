@@ -24,4 +24,14 @@ const table = [
     }
 ]
 
-console.table(table);
+let count = 0;
+// @ts-ignore
+const render = () => {
+    console.clear();
+    // @ts-ignore
+    table[1]["Connections Created"] = (count+= parseInt(Math.random() * 10));
+    console.table(table);
+};
+
+render();
+setInterval(render, 500);
