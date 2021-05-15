@@ -1,5 +1,5 @@
 {
-  "name": "ts-cli-app",
+  "name": "ts-console-ui",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/typescript-school/ts-cli-app.git",
@@ -17,5 +17,8 @@
     "@types/node": "^15.0.3",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "cliui": "^7.0.4"
   }
 }

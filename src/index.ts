@@ -1,3 +1,4 @@
 #!/usr/bin/env node
+// import './ConsoleTable';
+import './NodeConsoleTable';
 
-console.log("Hello from index.ts");

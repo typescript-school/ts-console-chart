@@ -1,143 +1,53 @@
-# Creating CLI app with Type Script
+# Creating cli ui
 
 
 
-- [x] Create a typescrpt project
-- [x] Onelines on  each library used
-- [x] Install as cli app
-- [x] publish to npm
-- [x] test in a docker image
-- [ ] source map and debugging ?
+**Active Connections**
+
+| Endpoint                       | Connections Created | Message Streams Created | Bytes Send | Bytes Received |
+| ------------------------------ | ------------------- | ----------------------- | ---------- | -------------- |
+| hellloworld.Greet [unary]      | 3                   | N/A                     | 23B        | 0              |
+| hellloworld.GreetMany [duplex] | 5                   | 16                      | 145234B    | 23B            |
+| Total                          | 8                   | 16                      | 143354B    | 23B            |
 
 
 
-**Create npm project** 
-
-```
-yarn init
-```
-
-
-
-**Install libs** 
-
-- `typescript` : typescript compiler ??
-- `@types/node` : types for nodejs
-- `@types/ts-node` : running typescript without compiling
-
-  ```
-  yarn add -D typescript @types/node ts-node
-  ```
-  
-  > These are all compile time libraries.At runtime, we will have a simple js.
-
-  
-
-Create **ts-config.json**
-
-- This file indicates that it is a typescirpt project
-
-- It has compiler options for typescript compiler.
-
-- Create it as : 
-
-  ```yaml
-  {
-    "compilerOptions": {
-      "baseUrl": ".",
-      "target": "ES2017",
-      "module": "commonjs",
-      "strict": true,
-      "esModuleInterop": true,
-      "rootDir": "src",   # Our ts files
-      "outDir": "dist"    # Compiled js files
+```typescript
+// @ts-ignore
+const table = [
+    {
+        "Endpoint": "hellloworld.Greet [unary]",
+        "Connections Created": "3",
+        "Message Streams Created": "N/A",
+        "Bytes Send": "23B",
+        "Bytes Received": "0"
+    },
+    {
+        "Endpoint": "hellloworld.GreetMany [duplex]",
+        "Connections Created": "5",
+        "Message Streams Created": "16",
+        "Bytes Send": "145234B",
+        "Bytes Received": "23B"
+    },
+    {
+        "Endpoint": "Total",
+        "Connections Created": "8",
+        "Message Streams Created": "16",
+        "Bytes Send": "145234B",
+        "Bytes Received": "23B"
     }
-  }
-  ```
+]
 
-  > Notice **"outDir": "dist"**. Our compiled js files are created here.
-
-
-
-**Create and `index.ts`**
-
-```
-console.log("Hello from index.ts");
+console.table(table);
 ```
 
 
 
-**Create script to compile and run `index.ts`** in `package.json`
+Result : 
 
-```yaml
-  "scripts": {
-    "compile": "tsc ",
-    "start": "node dist/index.js"
-  },
-```
-
-```bash
-yarn compile
-yarn start
-# output : 
-# Hello from index.ts
-```
+![image-20210515182144628](docs/images/image-20210515182144628.png)
 
 
 
-**Use `ts-node` to run without compiling** in `package.json`
+### Auto updating the table
 
-```diff
-	"scripts": {
-    "compile": "tsc ",
-    "start": "node dist/index.js",
-+   "dev": "ts-node src/index.ts"
-  },
-```
-
-
-
-**Create a bin (binary) to run for our program in `package.json`**
-
-```yaml
-  "bin": {
-    "ts-cli-app": "dist/index.js"
-  },
-```
-
-In `index.ts`, add directive to instruct shell on how to run this file : 
-
-```
-#!/usr/bin/env node
-```
-
-
-
-**Test by installing it on local machine** 
-
-```bash
-yarn link
-ts-cli-app
-# output : 
-# Hello from index.ts
-```
-
-
-
-
-
-**Publish to npm** 
-
-```bash
-# Publish to npm org.
-yarn publish
-
-# Test with a fresh install in a docker image
-docker run node:14 npx ts-cli-app 
-```
-
-
-
-Refer: 
-
-- https://walrus.ai/blog/2019/11/typescript-cli/
